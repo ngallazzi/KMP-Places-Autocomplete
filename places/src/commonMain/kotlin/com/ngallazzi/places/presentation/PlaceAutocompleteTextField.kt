@@ -28,9 +28,9 @@ fun PlaceAutoCompleteTextField(
     text: String = "",
     type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    isExtendedModeActive: Boolean = false
+    isExtendedModeActive: Boolean = false,
+    languageCode: String = Locale.current.language
 ) {
-    val languageCode = Locale.current.language
     val helper = remember {
         PlacesHelper(BuildConfig.API_KEY)
     }
