@@ -32,13 +32,9 @@ fun App() {
             )
             Spacer(modifier = Modifier.height(VERTICAL_SPACING))
             PlaceAutoCompleteTextField(label = "Please enter your country", type = Country::class)
-            Spacer(modifier = Modifier.height(VERTICAL_SPACING))
-            PlaceAutoCompleteTextField(
-                label = "Please enter your address",
-                type = Address::class,
-                isExtendedModeActive = true
-            )
-            Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            Spacer(modifier = Modifier.height(16.dp))
+            PlaceAutoCompleteTextField(label = "Please enter your address", type = Address::class)
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
