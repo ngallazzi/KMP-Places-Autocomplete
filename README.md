@@ -1,10 +1,19 @@
 # KMP Places Autocomplete 📌
 
 ## Introduction
-A simple Compose Multiplatform library to fill addresses and places in a form, based on Google
+A simple Compose Multiplatform library to fill addresses, cities and countries in a form, based on Google
 Places API by
 Google https://developers.google.com/maps/documentation/places/web-service/autocomplete.
 For Android and IOS
+
+# Screenshots
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/city.png" alt="City - Android" width="300"/>
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/country.png" alt="Country - Android" width="300"/>
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/address.png" alt="Address - Android" width="300"/>
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/city.png" alt="City - IOS" width="300"/>
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/country.png" alt="Country - IOS" width="300"/>
+<img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/address.png" alt="Address - IOS" width="300"/>
+
 
 ## ⚙️ Setup
 Please generate a valid Google Places API key and add it to your project. You can find the instructions to generate key on Google docs: https://developers.google.com/maps/documentation/places/web-service/get-api-key
@@ -16,22 +25,22 @@ api_key=<YOUR_API_KEY>
 Just put **PlaceAutoCompleteTextField** composable within your app theme. Supported places are: City, Country, Address
 
 ```kotlin
-// Normal usage
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
+        // Basic usage
         PlaceAutoCompleteTextField(
             label = "Please enter your city",
             type = City::class // or Country::class or Address::class
         )
     }
 }
-// Extended mode usage 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
+        // Extended mode usage 
         PlaceAutoCompleteTextField(
             label = "Please enter your city",
             type = City::class,
