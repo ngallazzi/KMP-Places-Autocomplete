@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version ("2.0.20")
     id("com.github.gmazzo.buildconfig") version "5.4.0"
+    `maven-publish`
+    signing // Optional: for signing artifacts
 }
 
 buildConfig {
@@ -73,6 +75,21 @@ kotlin {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "MavenCentral"
+            url = uri("https://maven.pkg.github.com/ngallazzi/KMP-Places-Autocomplete") // Your Maven repository URL
+            credentials(PasswordCredentials::class)
+            authentication{
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+}
+
+
+
 android {
     namespace = "com.ngallazzi.places"
     compileSdk = 34
@@ -87,3 +104,4 @@ android {
 dependencies {
     implementation(libs.androidx.runtime.android)
 }
+
