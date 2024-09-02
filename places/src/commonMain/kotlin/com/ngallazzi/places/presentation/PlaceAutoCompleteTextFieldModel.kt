@@ -31,7 +31,8 @@ internal class PlaceAutoCompleteTextFieldModel(
                     languageCode = languageCode
                 ).fold(onSuccess = { places ->
                     _uiState.value = _uiState.value.copy(
-                        suggestions = places.map { if (isExtendedModeActive) it.extendedLabel else it.label },
+                        suggestions = places.map { if (isExtendedModeActive) it.extendedLabel else it.label }
+                            .distinct(),
                         isSuggestionsPopupExpanded = places.isNotEmpty()
                     )
                 }, onFailure = {
