@@ -16,7 +16,8 @@ internal class PlaceAutoCompleteTextFieldModel(
     private val helper: PlacesHelper,
     private val placeType: KClass<out Place>,
     private val languageCode: String,
-    initialText: String
+    initialText: String,
+    private val isExtendedModeActive: Boolean = false
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PlaceAutocompleteState(text = initialText))
     val uiState: StateFlow<PlaceAutocompleteState> = _uiState.asStateFlow()
@@ -30,7 +31,7 @@ internal class PlaceAutoCompleteTextFieldModel(
                     languageCode = languageCode
                 ).fold(onSuccess = { places ->
                     _uiState.value = _uiState.value.copy(
-                        suggestions = places.map { it.label },
+                        suggestions = places.map { if (isExtendedModeActive) it.extendedLabel else it.label },
                         isSuggestionsPopupExpanded = places.isNotEmpty()
                     )
                 }, onFailure = {

@@ -28,6 +28,7 @@ fun PlaceAutoCompleteTextField(
     text: String = "",
     type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isExtendedModeActive: Boolean = false
 ) {
     val languageCode = Locale.current.language
     val helper = remember {
@@ -38,7 +39,8 @@ fun PlaceAutoCompleteTextField(
             placeType = type,
             helper = helper,
             languageCode = languageCode,
-            initialText = text
+            initialText = text,
+            isExtendedModeActive = isExtendedModeActive
         )
     }
     val state = viewModel.uiState.collectAsState()

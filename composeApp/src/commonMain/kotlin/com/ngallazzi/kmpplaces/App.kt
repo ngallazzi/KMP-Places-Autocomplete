@@ -15,17 +15,23 @@ import com.ngallazzi.places.domain.Country
 import com.ngallazzi.places.presentation.PlaceAutoCompleteTextField
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+private val VERTICAL_SPACING = 16.dp
+
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             PlaceAutoCompleteTextField(label = "Please enter your city", type = City::class)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(VERTICAL_SPACING))
             PlaceAutoCompleteTextField(label = "Please enter your country", type = Country::class)
-            Spacer(modifier = Modifier.height(16.dp))
-            PlaceAutoCompleteTextField(label = "Please enter your address", type = Address::class)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            PlaceAutoCompleteTextField(
+                label = "Please enter your address",
+                type = Address::class,
+                isExtendedModeActive = true
+            )
+            Spacer(modifier = Modifier.height(VERTICAL_SPACING))
         }
     }
 }

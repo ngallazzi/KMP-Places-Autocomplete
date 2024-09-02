@@ -15,7 +15,13 @@ internal class SuggestionsInteractorImpl(
     ): Result<List<Country>> {
         return runCatching {
             val response = placesDataSource.searchCountry(name = search, languageCode).getOrThrow()
-            val countries = response.predictions.map { Country(it.placeId, it.description) }
+            val countries = response.predictions.map {
+                Country(
+                    id = it.placeId,
+                    name = it.description,
+                    extendedName = it.structuredFormatting.mainText
+                )
+            }
             countries
         }
     }
@@ -28,7 +34,13 @@ internal class SuggestionsInteractorImpl(
             val response =
                 placesDataSource.searchCity(name = search, languageCode).getOrThrow()
             val cities =
-                response.predictions.map { City(it.placeId, it.structuredFormatting.mainText) }
+                response.predictions.map {
+                    City(
+                        id = it.placeId,
+                        name = it.description,
+                        extendedName = it.structuredFormatting.mainText
+                    )
+                }
             cities
         }
     }
@@ -42,7 +54,13 @@ internal class SuggestionsInteractorImpl(
                 placesDataSource.searchAddress(address = search, languageCode)
                     .getOrThrow()
             val predictions =
-                response.predictions.map { Address(it.placeId, it.structuredFormatting.mainText) }
+                response.predictions.map {
+                    Address(
+                        id = it.placeId,
+                        value = it.structuredFormatting.mainText,
+                        extendedValue = it.description,
+                    )
+                }
             predictions
         }
     }
