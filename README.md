@@ -50,7 +50,10 @@ fun App() {
         // Basic usage
         PlaceAutoCompleteTextField(
             label = "Please enter your city",
-            type = City::class // or Country::class or Address::class
+            type = City::class,
+            onSuggestionSelected = {
+                // DO SOMETHING
+            }
         )
     }
 }
@@ -62,7 +65,10 @@ fun App() {
         PlaceAutoCompleteTextField(
             label = "Please enter your city",
             type = City::class,
-            isExtendedModeActive = true
+            isExtendedModeActive = true,
+            onSuggestionSelected = {
+                // DO SOMETHING
+            }
         )
     }
 }
@@ -76,7 +82,8 @@ fun PlaceAutoCompleteTextField(
     type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
-    languageCode: String = Locale.current.language
+    languageCode: String = Locale.current.language,
+    onSuggestionSelected: (String) -> Unit = {}
 )
 
 ```
