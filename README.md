@@ -27,6 +27,16 @@ Put your inside your project local.properties file:
 ```kotlin 
 api_key=<YOUR_API_KEY>
 ```
+Then add the dependency to your project:
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.ngallazzi:KMP-Places-Autocomplete:<LAST_VERSION>")
+}
 ## Usage
 Just put **PlaceAutoCompleteTextField** composable within your app theme. Supported places are: City, Country, Address
 
