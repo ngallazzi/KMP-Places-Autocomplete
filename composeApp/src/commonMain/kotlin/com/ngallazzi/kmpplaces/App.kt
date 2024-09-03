@@ -28,7 +28,10 @@ fun App() {
         ) {
             PlaceAutoCompleteTextField(
                 label = "Please enter your city",
-                type = City::class
+                type = City::class,
+                onSuggestionSelected = {
+                    // DO SOMETHING
+                }
             )
             Spacer(modifier = Modifier.height(VERTICAL_SPACING))
             PlaceAutoCompleteTextField(label = "Please enter your country", type = Country::class)

@@ -29,7 +29,8 @@ fun PlaceAutoCompleteTextField(
     type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
-    languageCode: String = Locale.current.language
+    languageCode: String = Locale.current.language,
+    onSuggestionSelected: (String) -> Unit = {}
 ) {
     val helper = remember {
         PlacesHelper(BuildConfig.API_KEY)
@@ -65,6 +66,7 @@ fun PlaceAutoCompleteTextField(
                 state.value.suggestions.forEach { suggestion ->
                     DropdownMenuItem(modifier = Modifier.fillMaxWidth(), onClick = {
                         viewModel.onSuggestionSelected(suggestion)
+                        onSuggestionSelected(suggestion)
                         input = TextFieldValue(suggestion, selection = TextRange(suggestion.length))
                     }, text = { Text(suggestion) })
                 }
