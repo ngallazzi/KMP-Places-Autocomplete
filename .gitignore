@@ -126,3 +126,6 @@ fastlane/*.p8
 
 # Metadata
 .kotlin/metadata/
+
+# Gradle properties
+gradle.properties
