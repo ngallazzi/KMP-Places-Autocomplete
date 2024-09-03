@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -8,8 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version ("2.0.20")
     id("com.github.gmazzo.buildconfig") version "5.4.0"
-    `maven-publish`
-    signing // Optional: for signing artifacts
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 buildConfig {
@@ -30,6 +30,7 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
+        publishLibraryVariants("release", "debug")
     }
 
     task("testClasses")
@@ -75,21 +76,6 @@ kotlin {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "MavenCentral"
-            url = uri("https://maven.pkg.github.com/ngallazzi/KMP-Places-Autocomplete") // Your Maven repository URL
-            credentials(PasswordCredentials::class)
-            authentication{
-                create<BasicAuthentication>("basic")
-            }
-        }
-    }
-}
-
-
-
 android {
     namespace = "com.ngallazzi.places"
     compileSdk = 34
@@ -103,5 +89,49 @@ android {
 }
 dependencies {
     implementation(libs.androidx.runtime.android)
+}
+
+mavenPublishing {
+    // Define coordinates for the published artifact
+    coordinates(
+        groupId = "io.github.ngallazzi",
+        artifactId = "KMP-Places-Autocomplete",
+        version = "1.0.0"
+    )
+
+    // Configure POM metadata for the published artifact
+    pom {
+        name.set("KMP-Places-Autocomplete")
+        description.set("A simple Compose Multiplatform library to fill addresses, cities and countries in a form, based on Google Places API by Google https://developers.google.com/maps/documentation/places/web-service/autocomplete. For Android and IOS")
+        inceptionYear.set("2024")
+        url.set("https://github.com/ngallazzi/KMP-Places-Autocomplete")
+
+        licenses {
+            license {
+                name.set("GNU GENERAL PUBLIC LICENSE")
+                url.set("https://www.gnu.org/licenses/gpl-3.0.en.html#license-text")
+            }
+        }
+
+        // Specify developers information
+        developers {
+            developer {
+                id.set("ngallazzi")
+                name.set("Nicola Gallazzi")
+                email.set("nicola.gallazzi.dev@gmail.com")
+            }
+        }
+
+        // Specify SCM information
+        scm {
+            url.set("https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/README.md")
+        }
+    }
+
+    // Configure publishing to Maven Central
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    // Enable GPG signing for all publications
+    signAllPublications()
 }
 
