@@ -37,6 +37,8 @@ repositories {
 dependencies {
     implementation("io.github.ngallazzi:KMP-Places-Autocomplete:<LAST_VERSION>")
 }
+```
+
 ## Usage
 Just put **PlaceAutoCompleteTextField** composable within your app theme. Supported places are: City, Country, Address
 
