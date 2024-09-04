@@ -2,10 +2,11 @@ package com.ngallazzi.places.presentation
 
 import KMPPlaces.places.BuildConfig
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,11 +31,13 @@ fun PlaceAutoCompleteTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
     languageCode: String = Locale.current.language,
-    onSuggestionSelected: (String) -> Unit = {}
+    onSuggestionSelected: (String) -> Unit = {},
+    isMaterial3: Boolean = true
 ) {
     val helper = remember {
         PlacesHelper(BuildConfig.API_KEY)
     }
+
     val viewModel = remember {
         PlaceAutoCompleteTextFieldModel(
             placeType = type,
@@ -48,29 +51,48 @@ fun PlaceAutoCompleteTextField(
     var input by remember {
         mutableStateOf(TextFieldValue(state.value.text))
     }
+    val outlinedFieldModifier = modifier.fillMaxWidth()
+    val onValueChange = { newValue: TextFieldValue ->
+        if (newValue.text != input.text) {
+            input = newValue
+            viewModel.onValueChange(newValue.text)
+        }
+    }
+    val actualLabel = @Composable { Text(label) }
+    val dropDownMenuContent: @Composable ColumnScope.() -> Unit = {
+        state.value.suggestions.forEach { suggestion ->
+            DropdownMenuItem(modifier = Modifier.fillMaxWidth(), onClick = {
+                viewModel.onSuggestionSelected(suggestion)
+                onSuggestionSelected(suggestion)
+                input = TextFieldValue(suggestion, selection = TextRange(suggestion.length))
+            }, text = { Text(suggestion) })
+        }
+    }
 
     Box {
-        DefaultTextField(modifier = modifier.fillMaxWidth(),
-            label = label,
-            keyboardOptions = keyboardOptions,
+        OutlinedTextField(
+            modifier = outlinedFieldModifier,
             value = input,
-            onValueChange = { value ->
-                input = value
-                viewModel.onValueChange(value.text)
-            })
-        DropdownMenu(
-            properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
-            expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
-                viewModel.onSuggestionPopupDismissRequested()
-            }, content = {
-                state.value.suggestions.forEach { suggestion ->
-                    DropdownMenuItem(modifier = Modifier.fillMaxWidth(), onClick = {
-                        viewModel.onSuggestionSelected(suggestion)
-                        onSuggestionSelected(suggestion)
-                        input = TextFieldValue(suggestion, selection = TextRange(suggestion.length))
-                    }, text = { Text(suggestion) })
-                }
-            })
+            onValueChange = onValueChange,
+            singleLine = true,
+            label = actualLabel,
+            keyboardOptions = keyboardOptions,
+        )
+        if (isMaterial3) {
+            androidx.compose.material3.DropdownMenu(
+                properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
+                expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
+                    viewModel.onSuggestionPopupDismissRequested()
+                }, content = dropDownMenuContent
+            )
+        } else {
+            androidx.compose.material.DropdownMenu(
+                properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
+                expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
+                    viewModel.onSuggestionPopupDismissRequested()
+                }, content = dropDownMenuContent
+            )
+        }
     }
     state.value.errorText?.let {
         Text("An error occurred: $it")

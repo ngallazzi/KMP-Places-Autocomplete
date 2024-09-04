@@ -33,7 +33,8 @@ internal class PlaceAutoCompleteTextFieldModel(
                     _uiState.value = _uiState.value.copy(
                         suggestions = places.map { if (isExtendedModeActive) it.extendedLabel else it.label }
                             .distinct(),
-                        isSuggestionsPopupExpanded = places.isNotEmpty()
+                        isSuggestionsPopupExpanded = places.isNotEmpty(),
+                        errorText = null
                     )
                 }, onFailure = {
                     _uiState.value = _uiState.value.copy(errorText = it.message.orEmpty())
@@ -65,7 +66,11 @@ internal class PlaceAutoCompleteTextFieldModel(
     }
 
     fun onSuggestionSelected(suggestion: String) {
-        _uiState.value = _uiState.value.copy(text = suggestion, isSuggestionsPopupExpanded = false)
+        _uiState.value = _uiState.value.copy(
+            text = suggestion,
+            isSuggestionsPopupExpanded = false,
+            errorText = null
+        )
     }
 
     fun onSuggestionPopupDismissRequested() {
