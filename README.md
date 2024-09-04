@@ -64,7 +64,7 @@ fun App() {
         // Extended mode usage 
         PlaceAutoCompleteTextField(
             label = "Please enter your city",
-            type = City::class,
+            type = Address::class,
             isExtendedModeActive = true,
             onSuggestionSelected = {
                 // DO SOMETHING
@@ -83,7 +83,8 @@ fun PlaceAutoCompleteTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
     languageCode: String = Locale.current.language,
-    onSuggestionSelected: (String) -> Unit = {}
+    onSuggestionSelected: (String) -> Unit = {},
+    isMaterial3: Boolean = true // Set true as default, use isMaterial3 = false for legacy Material 2
 )
 
 ```
