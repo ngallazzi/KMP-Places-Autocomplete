@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.window.PopupProperties
@@ -31,8 +36,9 @@ fun PlaceAutoCompleteTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
     languageCode: String = Locale.current.language,
+    textStyle: TextStyle = LocalTextStyle.current,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     onSuggestionSelected: (String) -> Unit = {},
-    isMaterial3: Boolean = true
 ) {
     val helper = remember {
         PlacesHelper(BuildConfig.API_KEY)
@@ -77,22 +83,15 @@ fun PlaceAutoCompleteTextField(
             singleLine = true,
             label = actualLabel,
             keyboardOptions = keyboardOptions,
+            textStyle = textStyle,
+            colors = colors
         )
-        if (isMaterial3) {
-            androidx.compose.material3.DropdownMenu(
-                properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
-                expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
-                    viewModel.onSuggestionPopupDismissRequested()
-                }, content = dropDownMenuContent
-            )
-        } else {
-            androidx.compose.material.DropdownMenu(
-                properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
-                expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
-                    viewModel.onSuggestionPopupDismissRequested()
-                }, content = dropDownMenuContent
-            )
-        }
+        DropdownMenu(
+            properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
+            expanded = state.value.isSuggestionsPopupExpanded, onDismissRequest = {
+                viewModel.onSuggestionPopupDismissRequested()
+            }, content = dropDownMenuContent
+        )
     }
     state.value.errorText?.let {
         Text("An error occurred: $it")

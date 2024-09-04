@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontStyle
 @Composable
 fun Material3CustomTheme(content: @Composable () -> Unit) {
     MaterialTheme(
-        colorScheme = MaterialTheme.colorScheme.copy(surface = Color.Cyan), content = {
+        colorScheme = MaterialTheme.colorScheme.copy(surface = Color.White), content = {
             content.invoke()
         }, typography = Typography(bodyMedium = TextStyle(fontStyle = FontStyle.Italic))
     )
