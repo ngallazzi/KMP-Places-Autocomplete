@@ -83,8 +83,9 @@ fun PlaceAutoCompleteTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     isExtendedModeActive: Boolean = false,
     languageCode: String = Locale.current.language,
+    textStyle: TextStyle = LocalTextStyle.current,
+    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     onSuggestionSelected: (String) -> Unit = {},
-    isMaterial3: Boolean = true // Set true as default, use isMaterial3 = false for legacy Material 2
 )
 
 ```
