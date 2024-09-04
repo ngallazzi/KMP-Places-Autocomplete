@@ -4,6 +4,7 @@ import KMPPlaces.places.BuildConfig
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -19,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -34,10 +36,20 @@ fun PlaceAutoCompleteTextField(
     text: String = "",
     type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    singleLine: Boolean = false,
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    minLines: Int = 1,
     isExtendedModeActive: Boolean = false,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    supportingText: @Composable (() -> Unit)? = null,
     languageCode: String = Locale.current.language,
     textStyle: TextStyle = LocalTextStyle.current,
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
+    shape: Shape = OutlinedTextFieldDefaults.shape,
     onSuggestionSelected: (String) -> Unit = {},
 ) {
     val helper = remember {
@@ -84,7 +96,16 @@ fun PlaceAutoCompleteTextField(
             label = actualLabel,
             keyboardOptions = keyboardOptions,
             textStyle = textStyle,
-            colors = colors
+            colors = colors,
+            shape = shape,
+            keyboardActions = keyboardActions,
+            maxLines = maxLines,
+            minLines = minLines,
+            enabled = enabled,
+            readOnly = readOnly,
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon,
+            supportingText = supportingText
         )
         DropdownMenu(
             properties = PopupProperties(focusable = false, dismissOnClickOutside = true),
