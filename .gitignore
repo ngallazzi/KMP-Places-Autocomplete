@@ -128,4 +128,4 @@ fastlane/*.p8
 .kotlin/metadata/
 
 # Gradle properties
-gradle.properties
+maven_central_credentials.txt
