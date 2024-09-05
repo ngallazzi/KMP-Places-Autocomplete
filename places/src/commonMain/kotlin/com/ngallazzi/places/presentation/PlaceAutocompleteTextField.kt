@@ -67,7 +67,12 @@ fun PlaceAutoCompleteTextField(
     }
     val state = viewModel.uiState.collectAsState()
     var input by remember {
-        mutableStateOf(TextFieldValue(state.value.text))
+        mutableStateOf(
+            TextFieldValue(
+                state.value.text,
+                selection = TextRange(state.value.text.length)
+            )
+        )
     }
     val outlinedFieldModifier = modifier.fillMaxWidth()
     val onValueChange = { newValue: TextFieldValue ->

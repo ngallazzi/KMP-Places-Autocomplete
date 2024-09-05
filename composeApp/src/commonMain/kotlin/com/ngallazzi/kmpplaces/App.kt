@@ -37,6 +37,7 @@ fun App() {
                 )
                 Spacer(modifier = Modifier.height(VERTICAL_SPACING))
                 PlaceAutoCompleteTextField(
+                    text = "Italy",
                     label = "Please enter your country",
                     type = Country::class,
                     colors = OutlinedTextFieldDefaults.colors(focusedTextColor = Color.Red)
