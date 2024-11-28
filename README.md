@@ -1,6 +1,6 @@
 # KMP Places Autocomplete 📌
 [![Kotlin](https://img.shields.io/badge/kotlin-v2.0.20-blue.svg?logo=kotlin)](http://kotlinlang.org)
-[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.6.11-blue)](https://github.com/JetBrains/compose-multiplatform)
+[![Compose Multiplatform](https://img.shields.io/badge/Compose%20Multiplatform-v1.7.1-blue)](https://github.com/JetBrains/compose-multiplatform)
 ![badge-android](http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat)
 ![badge-ios](http://img.shields.io/badge/platform-ios-CDCDCD.svg?style=flat)
 
@@ -45,6 +45,7 @@ dependencies {
 
 ## Usage
 Just put **PlaceAutoCompleteTextField** composable within your app theme. Supported places are: City, Country, Address
+Want to use 
 
 ```kotlin
 @Composable
