@@ -15,10 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextRange
@@ -66,28 +63,14 @@ fun PlaceAutoCompleteTextField(
         )
     }
     val state = viewModel.uiState.collectAsState()
-    var input by remember {
-        mutableStateOf(
-            TextFieldValue(
-                state.value.text,
-                selection = TextRange(state.value.text.length)
-            )
-        )
-    }
+
     val outlinedFieldModifier = modifier.fillMaxWidth()
-    val onValueChange = { newValue: TextFieldValue ->
-        if (newValue.text != input.text) {
-            input = newValue
-            viewModel.onValueChange(newValue.text)
-        }
-    }
     val actualLabel = @Composable { Text(label) }
     val dropDownMenuContent: @Composable ColumnScope.() -> Unit = {
         state.value.suggestions.forEach { suggestion ->
             DropdownMenuItem(modifier = Modifier.fillMaxWidth(), onClick = {
                 viewModel.onSuggestionSelected(suggestion)
                 onSuggestionSelected(suggestion)
-                input = TextFieldValue(suggestion, selection = TextRange(suggestion.length))
             }, text = { Text(suggestion) })
         }
     }
@@ -95,8 +78,10 @@ fun PlaceAutoCompleteTextField(
     Box {
         OutlinedTextField(
             modifier = outlinedFieldModifier,
-            value = input,
-            onValueChange = onValueChange,
+            value = state.value.textFieldValue,
+            onValueChange = { newValue: TextFieldValue ->
+                viewModel.onValueChange(newValue)
+            },
             singleLine = true,
             label = actualLabel,
             keyboardOptions = keyboardOptions,
