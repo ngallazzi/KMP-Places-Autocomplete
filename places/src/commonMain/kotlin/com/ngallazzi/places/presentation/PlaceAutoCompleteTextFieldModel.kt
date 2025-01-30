@@ -1,5 +1,7 @@
 package com.ngallazzi.places.presentation
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ngallazzi.places.domain.Address
@@ -19,14 +21,15 @@ internal class PlaceAutoCompleteTextFieldModel(
     initialText: String,
     private val isExtendedModeActive: Boolean = false
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(PlaceAutocompleteState(text = initialText))
+    private val _uiState =
+        MutableStateFlow(PlaceAutocompleteState(textFieldValue = TextFieldValue(text = initialText)))
     val uiState: StateFlow<PlaceAutocompleteState> = _uiState.asStateFlow()
 
-    fun onValueChange(text: String) {
-        if (text.isNotEmpty()) {
+    fun onValueChange(value: TextFieldValue) {
+        if (value.text.isNotEmpty() && value.text != _uiState.value.textFieldValue.text) {
             viewModelScope.launch {
                 getSuggestions(
-                    text,
+                    value.text,
                     type = placeType,
                     languageCode = languageCode
                 ).fold(onSuccess = { places ->
@@ -44,7 +47,7 @@ internal class PlaceAutoCompleteTextFieldModel(
             _uiState.value =
                 _uiState.value.copy(suggestions = listOf(), isSuggestionsPopupExpanded = false)
         }
-        _uiState.value = _uiState.value.copy(text = text)
+        _uiState.value = _uiState.value.copy(textFieldValue = value)
     }
 
     private suspend fun getSuggestions(
@@ -67,7 +70,9 @@ internal class PlaceAutoCompleteTextFieldModel(
 
     fun onSuggestionSelected(suggestion: String) {
         _uiState.value = _uiState.value.copy(
-            text = suggestion,
+            textFieldValue = _uiState.value.textFieldValue.copy(
+                text = suggestion, selection = TextRange(suggestion.length)
+            ),
             isSuggestionsPopupExpanded = false,
             errorText = null
         )
