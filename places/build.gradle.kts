@@ -1,6 +1,6 @@
-import com.vanniktech.maven.publish.SonatypeHost
 import java.io.FileInputStream
 import java.util.Properties
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version ("2.0.20")
     id("com.github.gmazzo.buildconfig") version "5.4.0"
-    id("com.vanniktech.maven.publish") version "0.28.0"
+    id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
 buildConfig {
@@ -96,7 +96,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.ngallazzi",
         artifactId = "KMP-Places-Autocomplete",
-        version = "0.2.0"
+        version = "0.2.1"
     )
 
     // Configure POM metadata for the published artifact
@@ -134,4 +134,6 @@ mavenPublishing {
     // Enable GPG signing for all publications
     signAllPublications()
 }
+
+
 
