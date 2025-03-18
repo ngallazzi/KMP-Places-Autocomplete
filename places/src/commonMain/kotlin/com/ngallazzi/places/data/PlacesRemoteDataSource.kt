@@ -28,7 +28,7 @@ internal class PlacesRemoteDataSource(
         address: String,
         languageCode: String
     ): Result<AutocompleteDTO> {
-        return handleNetworkCall("maps/api/place/autocomplete/json?input=$address&type=geocode&language=$languageCode")
+        return handleNetworkCall("maps/api/place/autocomplete/json?input=$address&type=address&language=$languageCode")
     }
 
     private suspend fun handleNetworkCall(url: String): Result<AutocompleteDTO> {
