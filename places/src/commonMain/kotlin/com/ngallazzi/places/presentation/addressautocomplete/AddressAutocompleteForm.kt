@@ -17,11 +17,15 @@ import com.ngallazzi.places.presentation.PlaceAutoCompleteTextField
 private val VERTICAL_SPACING = 16.dp
 
 @Composable
-fun AddressAutocompleteForm(modifier: Modifier = Modifier) {
+fun AddressAutocompleteForm(
+    modifier: Modifier = Modifier,
+    onStateChanged: (AddressAutocompleteFormState) -> Unit
+) {
     val viewModel: AddressAutocompleteFormViewModel = remember {
         AddressAutocompleteFormViewModel()
     }
     val state = viewModel.uiState.collectAsState().value
+    onStateChanged(state)
 
     Column(
         modifier,
@@ -58,7 +62,7 @@ fun AddressAutocompleteForm(modifier: Modifier = Modifier) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text("Postal code") },
-            value = state.postalCode.orEmpty(),
+            value = state.postalCode,
             onValueChange = {
                 viewModel.onPostalCodeChanged(it)
             }

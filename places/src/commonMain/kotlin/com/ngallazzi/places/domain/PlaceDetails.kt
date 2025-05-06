@@ -1,6 +1,6 @@
 package com.ngallazzi.places.domain
 
-data class PlaceDetails(
+internal data class PlaceDetails(
     val id: String,
     val shortAddress: String,
     val formattedAddress: String,

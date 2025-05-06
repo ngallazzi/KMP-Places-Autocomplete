@@ -1,5 +1,5 @@
 package com.ngallazzi.places.domain
 
-interface PlaceDetailsInteractor {
+internal interface PlaceDetailsInteractor {
     suspend fun getPlaceDetails(placeId: String, languageCode: String): Result<PlaceDetails>
 }

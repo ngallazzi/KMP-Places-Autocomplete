@@ -18,7 +18,8 @@ import kotlinx.serialization.json.Json
 
 private const val BASE_URL = "maps.googleapis.com"
 
-class PlacesHelper(private val apiKey: String) : SuggestionsInteractor, PlaceDetailsInteractor {
+internal class PlacesHelper(private val apiKey: String) : SuggestionsInteractor,
+    PlaceDetailsInteractor {
     private val httpClient = HttpClient {
         defaultRequest {
             url {

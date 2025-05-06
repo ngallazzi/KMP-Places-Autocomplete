@@ -1,6 +1,6 @@
 package com.ngallazzi.places.domain
 
-interface SuggestionsInteractor {
+internal interface SuggestionsInteractor {
     suspend fun getCountrySuggestions(search: String, languageCode: String): Result<List<Country>>
     suspend fun getCitySuggestions(
         search: String,

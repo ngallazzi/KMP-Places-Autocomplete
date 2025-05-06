@@ -31,7 +31,7 @@ import com.ngallazzi.places.domain.PlaceDetails
 import kotlinx.coroutines.launch
 
 @Composable
-fun PlaceAutoCompleteTextField(
+internal fun PlaceAutoCompleteTextField(
     modifier: Modifier = Modifier,
     label: String = "",
     text: String = "",

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 
-class AddressAutocompleteFormViewModel : ViewModel() {
+internal class AddressAutocompleteFormViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(AddressAutocompleteFormState())
     val uiState: StateFlow<AddressAutocompleteFormState> = _uiState.asStateFlow()
     fun onAddressSelected(placeDetails: PlaceDetails) {

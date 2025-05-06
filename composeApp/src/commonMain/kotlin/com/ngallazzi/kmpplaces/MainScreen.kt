@@ -13,7 +13,11 @@ import com.ngallazzi.places.presentation.addressautocomplete.AddressAutocomplete
 fun App() {
     Column {
         Material3CustomTheme { // Your custom theme material3, default
-            AddressAutocompleteForm(modifier = Modifier.fillMaxWidth().padding(24.dp))
+            AddressAutocompleteForm(
+                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                onStateChanged = {
+                    // Handle state changes here
+                })
         }
     }
 }
