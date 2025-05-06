@@ -6,3 +6,7 @@ data class AddressAutocompleteFormState(
     val country: String = "",
     val postalCode: String = "",
 )
+
+fun AddressAutocompleteFormState.isValid(): Boolean {
+    return address.isNotEmpty() && city.isNotEmpty() && country.isNotEmpty() && postalCode.isNotEmpty()
+}

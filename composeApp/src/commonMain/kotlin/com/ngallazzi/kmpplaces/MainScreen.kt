@@ -15,7 +15,7 @@ fun App() {
         Material3CustomTheme { // Your custom theme material3, default
             AddressAutocompleteForm(
                 modifier = Modifier.fillMaxWidth().padding(24.dp),
-                onStateChanged = {
+                onSubmit = {
                     // Handle state changes here
                 })
         }
