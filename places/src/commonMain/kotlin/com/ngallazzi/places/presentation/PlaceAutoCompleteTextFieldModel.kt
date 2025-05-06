@@ -4,9 +4,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ngallazzi.places.domain.Address
-import com.ngallazzi.places.domain.City
-import com.ngallazzi.places.domain.Country
 import com.ngallazzi.places.domain.Place
 import com.ngallazzi.places.domain.PlaceDetails
 import com.ngallazzi.places.domain.Suggestion
@@ -14,30 +11,26 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
 internal class PlaceAutoCompleteTextFieldModel(
     private val helper: PlacesHelper,
-    private val placeType: KClass<out Place>,
     private val languageCode: String,
     initialText: String,
 ) : ViewModel() {
-    private val _uiState =
-        MutableStateFlow(
-            PlaceAutocompleteState(
-                textFieldValue = TextFieldValue(
-                    text = initialText,
-                    selection = TextRange(initialText.length)
-                )
+    private val _uiState = MutableStateFlow(
+        PlaceAutocompleteState(
+            textFieldValue = TextFieldValue(
+                text = initialText, selection = TextRange(initialText.length)
             )
         )
+    )
     val uiState: StateFlow<PlaceAutocompleteState> = _uiState.asStateFlow()
 
     fun onValueChange(value: TextFieldValue) {
         if (value.text.isNotEmpty() && value.text != _uiState.value.textFieldValue.text) {
             viewModelScope.launch {
                 getSuggestions(
-                    value.text, type = placeType, languageCode = languageCode
+                    value.text, languageCode = languageCode
                 ).fold(onSuccess = { places ->
                     _uiState.value = _uiState.value.copy(
                         suggestions = places.map {
@@ -63,24 +56,13 @@ internal class PlaceAutoCompleteTextFieldModel(
     }
 
     private suspend fun getSuggestions(
-        text: String, type: KClass<out Place>, languageCode: String
+        text: String, languageCode: String
     ): Result<List<Place>> {
-        return when (type) {
-            City::class -> helper.getCitySuggestions(text, languageCode)
-
-            Country::class -> helper.getCountrySuggestions(text, languageCode)
-
-            Address::class -> helper.getAddressSuggestions(search = text, languageCode)
-
-            else -> {
-                throw IllegalArgumentException("Unsupported place type")
-            }
-        }
+        return helper.getAddressSuggestions(search = text, languageCode)
     }
 
     suspend fun onSuggestionSelected(
-        suggestion: Suggestion,
-        onPlaceDetailsRetrieved: suspend (PlaceDetails) -> Unit
+        suggestion: Suggestion, onPlaceDetailsRetrieved: suspend (PlaceDetails) -> Unit
     ) {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(

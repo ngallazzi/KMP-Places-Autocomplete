@@ -37,7 +37,6 @@ fun PlaceAutoCompleteTextField(
     modifier: Modifier = Modifier,
     label: String = "",
     text: String = "",
-    type: KClass<out Place>,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = false,
@@ -61,7 +60,6 @@ fun PlaceAutoCompleteTextField(
 
     val viewModel = remember(key1 = text) {
         PlaceAutoCompleteTextFieldModel(
-            placeType = type,
             helper = helper,
             languageCode = languageCode,
             initialText = text
