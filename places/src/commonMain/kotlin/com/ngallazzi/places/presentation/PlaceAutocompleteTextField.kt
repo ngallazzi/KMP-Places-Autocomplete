@@ -30,6 +30,35 @@ import androidx.compose.ui.window.PopupProperties
 import com.ngallazzi.places.domain.PlaceDetails
 import kotlinx.coroutines.launch
 
+/**
+ * A composable text field with autocomplete support for places using the Google Places API.
+ *
+ * Displays place suggestions in a dropdown as the user types. Upon selection, the full place
+ * details are fetched and returned via [onSuggestionSelected]. Includes an optional trailing clear button.
+ *
+ * @param modifier Modifier to apply to the text field.
+ * @param label Label displayed inside the text field. Defaults to an empty string.
+ * @param text Initial text value. Used for setting up the view model.
+ * @param keyboardOptions Software keyboard options for the text field. Defaults to [KeyboardOptions.Default].
+ * @param keyboardActions Actions triggered from the IME. Defaults to [KeyboardActions.Default].
+ * @param singleLine Whether the text field is a single line. Defaults to false.
+ * @param maxLines Maximum number of lines. Defaults to unlimited unless [singleLine] is true.
+ * @param minLines Minimum number of lines. Defaults to 1.
+ * @param enabled Whether the text field is enabled. Defaults to true.
+ * @param readOnly Whether the text field is read-only. Defaults to false.
+ * @param leadingIcon Optional composable displayed at the start of the text field.
+ * @param supportingText Optional composable displayed below the text field.
+ * @param languageCode The BCP-47 language code to use for suggestions. Defaults to the current locale.
+ * @param textStyle The style of the input text. Defaults to [LocalTextStyle.current].
+ * @param colors Colors used for the text field. Defaults to [OutlinedTextFieldDefaults.colors].
+ * @param shape The shape of the text field. Defaults to [OutlinedTextFieldDefaults.shape].
+ * @param onSuggestionSelected Callback invoked when a suggestion is selected. Provides the full [PlaceDetails].
+ * @param onClearText Callback invoked when the clear (X) icon is clicked. Defaults to a no-op.
+ *
+ * @see PlaceAutoCompleteTextFieldModel
+ * @see PlaceDetails
+ */
+
 @Composable
 internal fun PlaceAutoCompleteTextField(
     modifier: Modifier = Modifier,

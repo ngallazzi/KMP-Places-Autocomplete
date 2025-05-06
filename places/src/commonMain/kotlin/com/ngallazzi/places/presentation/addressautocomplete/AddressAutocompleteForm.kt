@@ -14,20 +14,47 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ngallazzi.places.presentation.PlaceAutoCompleteTextField
 
+/**
+ * A composable form component for address autocompletion using the Places API.
+ *
+ * This form allows users to input an address with autocomplete suggestions and view autofilled
+ * city, country, and postal code fields. The form also includes a submit button that is only
+ * enabled when the form state is valid.
+ *
+ * @param modifier Modifier for styling and layout customization.
+ * @param addressLabel Label for the address input field. Defaults to "Please enter your address".
+ * @param cityLabel Label for the city field. Defaults to "City".
+ * @param countryLabel Label for the country field. Defaults to "Country".
+ * @param postalCodeLabel Label for the postal code field. Defaults to "Postal code".
+ * @param ctaLabel Label for the call-to-action (submit) button. Defaults to "Submit".
+ * @param formVerticalSpacing Vertical spacing between form elements. Defaults to 16.dp.
+ * @param submitButtonHeight Height of the submit button. Defaults to 32.dp.
+ * @param onSubmit Callback triggered when the submit button is clicked.
+ * Receives the current [AddressAutocompleteFormState].
+ *
+ * @see AddressAutocompleteFormState
+ * @see AddressAutocompleteFormViewModel
+ * @see PlaceAutoCompleteTextField
+ */
+
 private val VERTICAL_SPACING = 16.dp
+private val BUTTON_HEIGHT = 32.dp
 
 @Composable
 fun AddressAutocompleteForm(
     modifier: Modifier = Modifier,
-    onSubmit: (AddressAutocompleteFormState) -> Unit,
     addressLabel: String = "Please enter your address",
-    cityLabel: String = "Please enter your city",
-    countryLabel: String = "Please enter your country",
-    postalCodeLabel: String = "Please enter your postal code",
-    ctaLabel: String = "Click me"
+    cityLabel: String = "City",
+    countryLabel: String = "Country",
+    postalCodeLabel: String = "Postal code",
+    ctaLabel: String = "Submit",
+    formVerticalSpacing: Dp = VERTICAL_SPACING,
+    submitButtonHeight: Dp = BUTTON_HEIGHT,
+    onSubmit: (state: AddressAutocompleteFormState) -> Unit,
 ) {
     val viewModel: AddressAutocompleteFormViewModel = remember {
         AddressAutocompleteFormViewModel()
@@ -35,8 +62,7 @@ fun AddressAutocompleteForm(
     val state = viewModel.uiState.collectAsState().value
 
     Column(
-        modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier, horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PlaceAutoCompleteTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -47,25 +73,22 @@ fun AddressAutocompleteForm(
             text = state.address,
             onClearText = {
                 viewModel.onAddressCleared()
-            }
-        )
-        Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            })
+        Spacer(modifier = Modifier.height(formVerticalSpacing))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(cityLabel) },
             readOnly = true,
             value = state.city,
-            onValueChange = {}
-        )
-        Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            onValueChange = {})
+        Spacer(modifier = Modifier.height(formVerticalSpacing))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(countryLabel) },
             readOnly = true,
             value = state.country,
-            onValueChange = {}
-        )
-        Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            onValueChange = {})
+        Spacer(modifier = Modifier.height(formVerticalSpacing))
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
@@ -73,15 +96,13 @@ fun AddressAutocompleteForm(
             value = state.postalCode,
             onValueChange = {
                 viewModel.onPostalCodeChanged(it)
-            }
-        )
-        Spacer(modifier = Modifier.height(VERTICAL_SPACING))
+            })
+        Spacer(modifier = Modifier.height(formVerticalSpacing))
         Button(
-            modifier = Modifier.fillMaxWidth(), enabled = state.isValid(),
+            modifier = Modifier.fillMaxWidth().height(submitButtonHeight),
             onClick = {
                 onSubmit(state)
-            }, content = {
-                Text(ctaLabel)
-            })
+            }, content = { Text(ctaLabel) }, enabled = state.isValid()
+        )
     }
 }
