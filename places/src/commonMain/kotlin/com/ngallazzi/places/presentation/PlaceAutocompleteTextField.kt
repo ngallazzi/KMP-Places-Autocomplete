@@ -27,10 +27,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.window.PopupProperties
-import com.ngallazzi.places.domain.Place
 import com.ngallazzi.places.domain.PlaceDetails
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
 @Composable
 fun PlaceAutoCompleteTextField(
@@ -67,7 +65,6 @@ fun PlaceAutoCompleteTextField(
     }
     val state = viewModel.uiState.collectAsState()
 
-    val outlinedFieldModifier = modifier.fillMaxWidth()
     val actualLabel = @Composable { Text(label) }
     val dropDownMenuContent: @Composable ColumnScope.() -> Unit = {
         state.value.suggestions.forEach { suggestion ->
@@ -83,7 +80,7 @@ fun PlaceAutoCompleteTextField(
 
     Box {
         OutlinedTextField(
-            modifier = outlinedFieldModifier,
+            modifier = modifier,
             value = state.value.textFieldValue,
             onValueChange = { newValue: TextFieldValue ->
                 viewModel.onValueChange(newValue)
