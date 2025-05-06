@@ -1,10 +1,13 @@
 package com.ngallazzi.places.presentation
 
+import com.ngallazzi.places.data.PlaceDetailsInteractorImpl
 import com.ngallazzi.places.data.PlacesRemoteDataSource
 import com.ngallazzi.places.data.SuggestionsInteractorImpl
 import com.ngallazzi.places.domain.Address
 import com.ngallazzi.places.domain.City
 import com.ngallazzi.places.domain.Country
+import com.ngallazzi.places.domain.PlaceDetails
+import com.ngallazzi.places.domain.PlaceDetailsInteractor
 import com.ngallazzi.places.domain.SuggestionsInteractor
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,7 +18,7 @@ import kotlinx.serialization.json.Json
 
 private const val BASE_URL = "maps.googleapis.com"
 
-class PlacesHelper(private val apiKey: String) : SuggestionsInteractor {
+class PlacesHelper(private val apiKey: String) : SuggestionsInteractor, PlaceDetailsInteractor {
     private val httpClient = HttpClient {
         defaultRequest {
             url {
@@ -33,7 +36,13 @@ class PlacesHelper(private val apiKey: String) : SuggestionsInteractor {
         }
     }
 
-    private val interactor: SuggestionsInteractor = SuggestionsInteractorImpl(
+    private val suggestionsInteractor: SuggestionsInteractor = SuggestionsInteractorImpl(
+        PlacesRemoteDataSource(
+            httpClient
+        )
+    )
+
+    private val detailsInteractor: PlaceDetailsInteractor = PlaceDetailsInteractorImpl(
         PlacesRemoteDataSource(
             httpClient
         )
@@ -43,20 +52,27 @@ class PlacesHelper(private val apiKey: String) : SuggestionsInteractor {
         search: String,
         languageCode: String
     ): Result<List<Country>> {
-        return interactor.getCountrySuggestions(search, languageCode)
+        return suggestionsInteractor.getCountrySuggestions(search, languageCode)
     }
 
     override suspend fun getCitySuggestions(
         search: String,
         languageCode: String
     ): Result<List<City>> {
-        return interactor.getCitySuggestions(search, languageCode)
+        return suggestionsInteractor.getCitySuggestions(search, languageCode)
     }
 
     override suspend fun getAddressSuggestions(
         search: String,
         languageCode: String
     ): Result<List<Address>> {
-        return interactor.getAddressSuggestions(search, languageCode)
+        return suggestionsInteractor.getAddressSuggestions(search, languageCode)
+    }
+
+    override suspend fun getPlaceDetails(
+        placeId: String,
+        languageCode: String
+    ): Result<PlaceDetails> {
+        return detailsInteractor.getPlaceDetails(placeId, languageCode)
     }
 }

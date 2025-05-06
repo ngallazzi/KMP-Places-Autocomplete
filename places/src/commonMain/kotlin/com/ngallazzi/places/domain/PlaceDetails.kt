@@ -1,8 +1,10 @@
 package com.ngallazzi.places.domain
 
 data class PlaceDetails(
+    val id: String,
+    val shortAddress: String,
     val formattedAddress: String,
     val postalCode: String,
-    val countryName: String,
-    val cityName: String,
+    val country: String,
+    val city: String,
 )

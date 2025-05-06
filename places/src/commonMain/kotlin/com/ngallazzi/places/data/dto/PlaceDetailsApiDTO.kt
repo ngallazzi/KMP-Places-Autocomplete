@@ -4,9 +4,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PlaceDetailsApiDTO(
-    val result: List<AddressComponents>,
+internal data class PlaceDetailsApiDTO(
+    val result: DTOResult,
     val status: String,
-    @SerialName("formatted_address")
-    val formattedAddress: String
+)
+
+@Serializable
+internal data class DTOResult(
+    @SerialName("place_id") val placeId: String,
+    @SerialName("address_components") val addressComponents: List<AddressComponents>,
+    @SerialName("formatted_address") val formattedAddress: String,
+    @SerialName("name") val name: String
 )

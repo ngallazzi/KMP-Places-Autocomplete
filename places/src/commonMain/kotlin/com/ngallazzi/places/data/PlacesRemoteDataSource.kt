@@ -32,7 +32,7 @@ internal class PlacesRemoteDataSource(
     override suspend fun getPlaceDetails(
         placeId: String, languageCode: String
     ): Result<PlaceDetailsApiDTO> {
-        return handlePlaceDetailsCall("maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&language=$languageCode")
+        return handlePlaceDetailsCall("maps/api/place/details/json?place_id=$placeId&language=$languageCode")
     }
 
     private suspend fun handleAutocompleteCall(url: String): Result<AutocompleteDTO> {

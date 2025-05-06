@@ -13,15 +13,26 @@ internal class PlaceDetailsInteractorImpl(
         return runCatching {
             val response =
                 placesDataSource.getPlaceDetails(placeId = placeId, languageCode).getOrThrow()
-            val formattedAddress = response.formattedAddress
+            val formattedAddress = response.result.formattedAddress
             val postalCode =
-                response.result.firstOrNull { it.types.contains("postal_code") }?.shortName ?: ""
-            val countryName =
-                response.result.firstOrNull { it.types.contains("country") }?.longName ?: ""
-            val cityName =
-                response.result.firstOrNull { it.types.contains("administrative_area_level_3") }?.longName
+                response.result.addressComponents.firstOrNull { it.types.contains("postal_code") }?.shortName
                     ?: ""
-            return Result.success(PlaceDetails(formattedAddress, postalCode, countryName, cityName))
+            val countryName =
+                response.result.addressComponents.firstOrNull { it.types.contains("country") }?.longName
+                    ?: ""
+            val cityName =
+                response.result.addressComponents.firstOrNull { it.types.contains("locality") || it.types.contains("postal_town") }?.longName
+                    ?: ""
+            return Result.success(
+                PlaceDetails(
+                    id = response.result.placeId,
+                    formattedAddress = formattedAddress,
+                    postalCode = postalCode,
+                    country = countryName,
+                    city = cityName,
+                    shortAddress = response.result.name
+                )
+            )
         }
     }
 }

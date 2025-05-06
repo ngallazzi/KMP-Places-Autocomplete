@@ -1,3 +1,3 @@
 package com.ngallazzi.places.domain
 
-abstract class Place(val label: String, val extendedLabel: String)
+abstract class Place(open val id: String, val label: String, val extendedLabel: String)
