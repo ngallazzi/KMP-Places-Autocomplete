@@ -10,20 +10,9 @@ Places API by
 Google https://developers.google.com/maps/documentation/places/web-service/autocomplete.
 For Android and IOS
 
-# Screenshots
+# Demo
 
-<p align="center">
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/city.png" alt="City - Android" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/country.png" alt="Country - Android" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/address.png" alt="Address - Android" width="270"/>
-</p>
-<p align="center">
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/city.png" alt="City - IOS" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/country.png" alt="Country - IOS" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/address.png" alt="Address - IOS" width="270"/>
-</p>
-
-
+![App Demo](screenshots/app_demo.gif)
 
 ## ⚙️ Setup
 Please generate a valid Google Places API key and add it to your project. You can find the instructions to generate key on Google docs: https://developers.google.com/maps/documentation/places/web-service/get-api-key
@@ -44,63 +33,39 @@ dependencies {
 ```
 
 ## Usage
-Just put **PlaceAutoCompleteTextField** composable within your app theme. Supported places are: City, Country, Address
-Want to use 
+Just put **AddressAutocompleteForm** composable within your app theme. Handle state from related lambda
 
 ```kotlin
 @Composable
-@Preview
-fun App() {
-    MaterialTheme {
-        // Basic usage
-        PlaceAutoCompleteTextField(
-            label = "Please enter your city",
-            type = City::class,
-            onSuggestionSelected = {
-                // DO SOMETHING
-            }
-        )
+fun YourLayout() {
+    MaterialTheme { // Your custom theme material3, default
+        AddressAutocompleteForm(
+            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            onSubmit = { state ->
+                // Handle state changes here
+            })
     }
 }
-@Composable
-@Preview
-fun App() {
-    MaterialTheme {
-        // Extended mode usage 
-        PlaceAutoCompleteTextField(
-            label = "Please enter your city",
-            type = Address::class,
-            isExtendedModeActive = true,
-            onSuggestionSelected = {
-                // DO SOMETHING
-            }
-        )
-    }
-}
-
 // Complete parameters list
+
 @Composable
-fun PlaceAutoCompleteTextField(
+fun AddressAutocompleteForm(
     modifier: Modifier = Modifier,
-    label: String = "",
-    text: String = "",
-    type: KClass<out Place>,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = false,
-    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
-    minLines: Int = 1,
-    isExtendedModeActive: Boolean = false,
-    enabled: Boolean = true,
-    readOnly: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    supportingText: @Composable (() -> Unit)? = null,
-    languageCode: String = Locale.current.language,
-    textStyle: TextStyle = LocalTextStyle.current,
-    colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
-    shape: Shape = OutlinedTextFieldDefaults.shape,
-    onSuggestionSelected: (String) -> Unit = {},
+    addressLabel: String = "Please enter your address",
+    cityLabel: String = "City",
+    countryLabel: String = "Country",
+    postalCodeLabel: String = "Postal code",
+    ctaLabel: String = "Submit",
+    formVerticalSpacing: Dp = VERTICAL_SPACING,
+    submitButtonHeight: Dp = BUTTON_HEIGHT,
+    onSubmit: (state: AddressAutocompleteFormState) -> Unit,
+)
+
+data class AddressAutocompleteFormState(
+    val address: String = "",
+    val city: String = "",
+    val country: String = "",
+    val postalCode: String = "",
 )
 
 ```

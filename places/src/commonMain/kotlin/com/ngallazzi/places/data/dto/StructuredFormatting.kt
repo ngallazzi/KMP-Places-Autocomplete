@@ -4,4 +4,4 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StructuredFormatting(@SerialName("main_text") val mainText: String)
+internal data class StructuredFormatting(@SerialName("main_text") val mainText: String)
