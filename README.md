@@ -32,12 +32,13 @@ dependencies {
 ```
 
 ## Usage
-Just put **AddressAutocompleteForm** composable within your app theme. Handle state from related lambda
+Just put **AddressAutocompleteForm** or **PlaceAutoCompleteTextField** composable within your app theme. Handle state from related lambda
 
 ```kotlin
+// If you need the complete form
 @Composable
-fun YourLayout() {
-    MaterialTheme { // Your custom theme material3, default
+fun MyLayout(){
+    MaterialTheme {
         AddressAutocompleteForm(
             modifier = Modifier.fillMaxWidth().padding(24.dp),
             onSubmit = { state ->
@@ -45,27 +46,21 @@ fun YourLayout() {
             })
     }
 }
-// Complete parameters list
 
+// If you have your own layout and you only need the autocomplete field with its details
 @Composable
-fun AddressAutocompleteForm(
-    modifier: Modifier = Modifier,
-    addressLabel: String = "Please enter your address",
-    cityLabel: String = "City",
-    countryLabel: String = "Country",
-    postalCodeLabel: String = "Postal code",
-    ctaLabel: String = "Submit",
-    formVerticalSpacing: Dp = VERTICAL_SPACING,
-    submitButtonHeight: Dp = BUTTON_HEIGHT,
-    onSubmit: (state: AddressAutocompleteFormState) -> Unit,
-)
-
-data class AddressAutocompleteFormState(
-    val address: String = "",
-    val city: String = "",
-    val country: String = "",
-    val postalCode: String = "",
-)
+fun MyLayout(){
+    MaterialTheme {
+        Column {
+            PlaceAutoCompleteTextField(
+                label = "Please search a place",
+                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                onSuggestionSelected = { placeDetails ->
+                    placeDetailsState = placeDetails
+                })
+        }
+    }
+}
 
 ```
 ## 💬 Feedback
