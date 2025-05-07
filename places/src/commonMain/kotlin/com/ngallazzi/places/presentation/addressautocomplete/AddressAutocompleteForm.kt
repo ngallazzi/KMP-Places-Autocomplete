@@ -2,6 +2,7 @@ package com.ngallazzi.places.presentation.addressautocomplete
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
@@ -42,7 +43,7 @@ import com.ngallazzi.places.presentation.PlaceAutoCompleteTextField
  */
 
 private val VERTICAL_SPACING = 16.dp
-private val BUTTON_HEIGHT = 32.dp
+private val BUTTON_HEIGHT = 48.dp
 
 @Composable
 fun AddressAutocompleteForm(
@@ -97,9 +98,9 @@ fun AddressAutocompleteForm(
             onValueChange = {
                 viewModel.onPostalCodeChanged(it)
             })
-        Spacer(modifier = Modifier.height(formVerticalSpacing))
+        Spacer(modifier = Modifier.height(formVerticalSpacing * 2))
         Button(
-            modifier = Modifier.fillMaxWidth().height(submitButtonHeight),
+            modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = submitButtonHeight),
             onClick = {
                 onSubmit(state)
             }, content = { Text(ctaLabel) }, enabled = state.isValid()
