@@ -96,7 +96,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.ngallazzi",
         artifactId = "KMP-Places-Autocomplete",
-        version = "0.2.1"
+        version = "0.3.0"
     )
 
     // Configure POM metadata for the published artifact
