@@ -60,7 +60,7 @@ import kotlinx.coroutines.launch
  */
 
 @Composable
-internal fun PlaceAutoCompleteTextField(
+fun PlaceAutoCompleteTextField(
     modifier: Modifier = Modifier,
     label: String = "",
     text: String = "",
