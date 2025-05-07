@@ -10,20 +10,9 @@ Places API by
 Google https://developers.google.com/maps/documentation/places/web-service/autocomplete.
 For Android and IOS
 
-# Screenshots
+# Demo
 
-<p align="center">
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/city.png" alt="City - Android" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/country.png" alt="Country - Android" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/android/address.png" alt="Address - Android" width="270"/>
-</p>
-<p align="center">
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/city.png" alt="City - IOS" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/country.png" alt="Country - IOS" width="270" style="margin-right: 24px;"/>
-  <img src="https://github.com/ngallazzi/KMP-Places-Autocomplete/blob/main/screenshots/ios/address.png" alt="Address - IOS" width="270"/>
-</p>
-
-
+![App Demo](screenshots/app_demo.gif)
 
 ## ⚙️ Setup
 Please generate a valid Google Places API key and add it to your project. You can find the instructions to generate key on Google docs: https://developers.google.com/maps/documentation/places/web-service/get-api-key
