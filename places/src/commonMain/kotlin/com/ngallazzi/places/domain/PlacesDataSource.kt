@@ -1,6 +1,7 @@
 package com.ngallazzi.places.domain
 
 import com.ngallazzi.places.data.dto.AutocompleteDTO
+import com.ngallazzi.places.data.dto.PlaceDetailsApiDTO
 
 internal interface PlacesDataSource {
     suspend fun searchCity(name: String, languageCode: String): Result<AutocompleteDTO>
@@ -11,4 +12,6 @@ internal interface PlacesDataSource {
         address: String,
         languageCode: String
     ): Result<AutocompleteDTO>
+
+    suspend fun getPlaceDetails(placeId: String, languageCode: String): Result<PlaceDetailsApiDTO>
 }
