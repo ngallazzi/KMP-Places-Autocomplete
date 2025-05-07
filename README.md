@@ -11,8 +11,7 @@ Google https://developers.google.com/maps/documentation/places/web-service/autoc
 For Android and IOS
 
 # Demo
-
-![App Demo](screenshots/app_demo.gif)
+<img src="screenshots/app_demo.gif" width="300" alt="App Demo" />
 
 ## ⚙️ Setup
 Please generate a valid Google Places API key and add it to your project. You can find the instructions to generate key on Google docs: https://developers.google.com/maps/documentation/places/web-service/get-api-key
