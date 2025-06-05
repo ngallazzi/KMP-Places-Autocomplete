@@ -15,9 +15,10 @@ For Android and IOS
 
 ## ⚙️ Setup
 Please generate a valid Google Places API key and add it to your project. You can find the instructions to generate key on Google docs: https://developers.google.com/maps/documentation/places/web-service/get-api-key
-Put your inside your project local.properties file:
+Use KMPPlaces.initialize(apiKey) to initialize the library.
 ```kotlin 
-api_key=<YOUR_API_KEY>
+android - KMPPlaces.initialize(apiKey) - normally in src/androidMain/MainActivity
+ios - KMPPlaces.initialize(apiKey) - normally in src/iosMain/MainViewController
 ```
 Then add the dependency to your project:
 
