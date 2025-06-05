@@ -24,6 +24,9 @@ fun App() {
     var placeDetailsState: PlaceDetails? by remember {
         mutableStateOf(null)
     }
+    var error: Throwable? by remember {
+        mutableStateOf(null)
+    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Material3CustomTheme { // Your custom theme material3, default
             AddressAutocompleteForm(
@@ -37,7 +40,12 @@ fun App() {
                 modifier = Modifier.fillMaxWidth().padding(24.dp),
                 onSuggestionSelected = { placeDetails ->
                     placeDetailsState = placeDetails
+                }, onError = {
+                    error = it
                 })
+            if (error != null) {
+                Text(modifier = Modifier.fillMaxWidth().padding(24.dp), text = error.toString())
+            }
             placeDetailsState?.run {
                 Text(
                     modifier = Modifier.padding(24.dp),

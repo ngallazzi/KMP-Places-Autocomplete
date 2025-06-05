@@ -78,7 +78,8 @@ fun PlaceAutoCompleteTextField(
     colors: TextFieldColors = OutlinedTextFieldDefaults.colors(),
     shape: Shape = OutlinedTextFieldDefaults.shape,
     onSuggestionSelected: suspend (PlaceDetails) -> Unit,
-    onClearText: () -> Unit = {}
+    onClearText: () -> Unit = {},
+    onError: (Throwable?) -> Unit = {}
 ) {
     val helper = remember {
         PlacesHelper(BuildConfig.API_KEY)
@@ -144,8 +145,8 @@ fun PlaceAutoCompleteTextField(
                 viewModel.onSuggestionPopupDismissRequested()
             }, content = dropDownMenuContent
         )
-    }
-    state.value.errorText?.let {
-        Text("An error occurred: $it")
+        if (state.value.error != null) {
+            onError(state.value.error)
+        }
     }
 }
