@@ -42,10 +42,10 @@ internal class PlaceAutoCompleteTextFieldModel(
                             )
                         }.distinct(),
                         isSuggestionsPopupExpanded = places.isNotEmpty(),
-                        errorText = null
+                        error = null
                     )
                 }, onFailure = {
-                    _uiState.value = _uiState.value.copy(errorText = it.message.orEmpty())
+                    _uiState.value = _uiState.value.copy(error = it)
                 })
             }
         } else {
@@ -69,7 +69,7 @@ internal class PlaceAutoCompleteTextFieldModel(
                 textFieldValue = _uiState.value.textFieldValue.copy(
                     text = suggestion.description,
                     selection = TextRange(suggestion.description.length)
-                ), isSuggestionsPopupExpanded = false, errorText = null
+                ), isSuggestionsPopupExpanded = false, error = null
             )
         }
         helper.getPlaceDetails(suggestion.placeId, languageCode).fold(onSuccess = {
@@ -83,7 +83,7 @@ internal class PlaceAutoCompleteTextFieldModel(
             )
             onPlaceDetailsRetrieved(placeDetails)
         }, onFailure = {
-            _uiState.value = _uiState.value.copy(errorText = it.message.orEmpty())
+            _uiState.value = _uiState.value.copy(error = it)
         })
     }
 
