@@ -1,6 +1,5 @@
 package com.ngallazzi.places.presentation
 
-import KMPPlaces.places.BuildConfig
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.window.PopupProperties
+import com.ngallazzi.places.KMPPlaces
 import com.ngallazzi.places.domain.PlaceDetails
 import kotlinx.coroutines.launch
 
@@ -82,7 +82,7 @@ fun PlaceAutoCompleteTextField(
     onError: (Throwable?) -> Unit = {}
 ) {
     val helper = remember {
-        PlacesHelper(BuildConfig.API_KEY)
+        PlacesHelper(KMPPlaces.getApiKey())
     }
     val coroutineScope = rememberCoroutineScope()
 

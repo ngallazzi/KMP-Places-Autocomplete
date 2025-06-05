@@ -12,17 +12,6 @@ plugins {
     id("com.vanniktech.maven.publish") version "0.30.0"
 }
 
-buildConfig {
-    // Load the properties from local.properties
-    val localProperties = Properties()
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        localProperties.load(FileInputStream(localPropertiesFile))
-        val apiKey = localProperties.getProperty("api_key")
-        buildConfigField("API_KEY", apiKey)
-    }
-}
-
 kotlin {
     androidTarget {
         compilations.all {
